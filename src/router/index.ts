@@ -1,5 +1,6 @@
 import {
-    createWebHashHistory,
+    // createWebHashHistory,
+    createWebHistory,
     createRouter
 } from "vue-router";
 
@@ -48,7 +49,8 @@ export const constantRoutes = [
 
 const router = createRouter({
     //路由模式带“#”号
-    history: createWebHashHistory(),
+    // history: createWebHashHistory(),
+    history: createWebHistory(),
     routes: constantRoutes
 })
 

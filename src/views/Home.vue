@@ -14,6 +14,14 @@ import Flan from '../assets/Flan.png'
 import store from '../store'
 import { useRouter } from 'vue-router';
 import { ref } from 'vue'
+Telegram.WebApp.MainButton.setParams({
+    text: "VIEW ORDER",
+    color: "#31B545",
+    text_color: "#ffffff",
+    is_active: true,
+    is_visible: false
+})
+Telegram.WebApp.MainButton.onClick(() => { handleToOrderPage() })
 let data = ref(
     [
         {
@@ -96,11 +104,11 @@ const router = useRouter()
 
 const handleClickAddButton = (index: number) => {
     data.value[index].number++
-    isShowViewOrder.value = false
+    Telegram.WebApp.MainButton.isVisible = false
     let orderData: { name: string; money: string; src: string; number: number }[] = []
     data.value.forEach((item) => {
         if (item.number > 0) {
-            isShowViewOrder.value = true
+            Telegram.WebApp.MainButton.isVisible = true
             orderData.push(item)
         }
     })
@@ -108,11 +116,11 @@ const handleClickAddButton = (index: number) => {
 }
 const handleClickMinusButton = (index: number) => {
     data.value[index].number--
-    isShowViewOrder.value = false
+    Telegram.WebApp.MainButton.isVisible = false
     let orderData: { name: string; money: string; src: string; number: number }[] = []
     data.value.forEach((item) => {
         if (item.number > 0) {
-            isShowViewOrder.value = true
+            Telegram.WebApp.MainButton.isVisible = true
             orderData.push(item)
         }
     })
@@ -126,14 +134,13 @@ const handleGetDataNumbers = () => {
         for (let dataItem of data.value) {
             if (dataItem.name == item.name) {
                 dataItem.number = item.number
-                isShowViewOrder.value = true
+                Telegram.WebApp.MainButton.isVisible = true
                 break;
             }
         }
     })
 }
 handleGetDataNumbers()
-
 </script>
 
 <template>
@@ -159,12 +166,6 @@ handleGetDataNumbers()
                 <text>{{ item.number }}</text>
             </div>
         </div>
-    </div>
-    <div class="bottom" v-if="!isShowViewOrder">
-        <text>@DurgerKingBot</text>
-    </div>
-    <div class="bottom-order" @click="handleToOrderPage()" v-else>
-        <text>VIEW ORDER</text>
     </div>
 </template>
 

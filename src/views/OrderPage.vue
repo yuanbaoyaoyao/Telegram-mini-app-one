@@ -13,6 +13,9 @@ const handleTurnBack = () => {
 const handleToCheckout = () => {
     router.push("/checkout")
 }
+Telegram.WebApp.MainButton.setText("PAY $" + totalMoney)
+Telegram.WebApp.MainButton.onClick(() => { handleToCheckout() })
+Telegram.WebApp.BackButton.onClick(() => { handleTurnBack() })
 </script>
 
 <template>
@@ -40,18 +43,20 @@ const handleToCheckout = () => {
             <input type="text" v-model="input" placeholder="Add comment..." class="content-comment" />
         </div>
         <div class="content-pin">Any special requests,details,final wishes etc</div>
-        <div style="height: 60px;">
-            <!-- 占位 -->
+        <!-- <div style="height: 60px;">
         </div>
         <div class="bottom" @click="handleToCheckout()">
             <text>PAY ${{ totalMoney }}</text>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <style scoped>
 .content {
     background-color: #F1F1F1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .content-header {
@@ -130,6 +135,7 @@ const handleToCheckout = () => {
     padding-right: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
+    flex: 1;
 }
 
 .bottom {

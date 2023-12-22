@@ -95,7 +95,7 @@ const handleToOrder = () => {
 .content-header,
 .content-total,
 .content-buttons {
-    background-color: #f9f9f9;
+    background-color: #ffffff;
     box-shadow: 5px 5px 10px rgb(223, 223, 223);
 }
 
