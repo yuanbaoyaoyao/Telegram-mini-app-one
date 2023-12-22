@@ -17,7 +17,7 @@ const menu2 = new Menu("movements")
 // 已启用通知的用户标识符集合。
 const notifications = new Set();
 
-function toggleNotifications(id) {
+function toggleNotifications(id:number) {
     if (notifications.has(id)) notifications.delete(id);
     else notifications.add(id);
 }

@@ -11,6 +11,8 @@ import Coke from '../assets/Coke.png'
 import Icecream from '../assets/Icecream.png'
 import Cookie from '../assets/Cookie.png'
 import Flan from '../assets/Flan.png'
+import store from '../store'
+import { useRouter } from 'vue-router';
 import { ref } from 'vue'
 let data = ref(
     [
@@ -90,25 +92,47 @@ let data = ref(
 )
 
 let isShowViewOrder = ref(false)
+const router = useRouter()
 
 const handleClickAddButton = (index: number) => {
     data.value[index].number++
     isShowViewOrder.value = false
+    let orderData: { name: string; money: string; src: string; number: number }[] = []
     data.value.forEach((item) => {
         if (item.number > 0) {
             isShowViewOrder.value = true
+            orderData.push(item)
         }
     })
+    store.commit("SET_DATA", orderData)
 }
 const handleClickMinusButton = (index: number) => {
     data.value[index].number--
     isShowViewOrder.value = false
+    let orderData: { name: string; money: string; src: string; number: number }[] = []
     data.value.forEach((item) => {
         if (item.number > 0) {
             isShowViewOrder.value = true
+            orderData.push(item)
+        }
+    })
+    store.commit("SET_DATA", orderData)
+}
+const handleToOrderPage = () => {
+    router.push("/order")
+}
+const handleGetDataNumbers = () => {
+    store.getters.data.forEach((item: { name: string; number: number }) => {
+        for (let dataItem of data.value) {
+            if (dataItem.name == item.name) {
+                dataItem.number = item.number
+                isShowViewOrder.value = true
+                break;
+            }
         }
     })
 }
+handleGetDataNumbers()
 
 </script>
 
@@ -139,7 +163,7 @@ const handleClickMinusButton = (index: number) => {
     <div class="bottom" v-if="!isShowViewOrder">
         <text>@DurgerKingBot</text>
     </div>
-    <div class="bottom-order" v-else>
+    <div class="bottom-order" @click="handleToOrderPage()" v-else>
         <text>VIEW ORDER</text>
     </div>
 </template>
@@ -201,6 +225,7 @@ const handleClickMinusButton = (index: number) => {
 
 .bottom {
     color: #b8b8b8;
+    background-color: #FFFFFF;
     height: 50px;
     width: 100%;
     display: flex;
@@ -222,5 +247,6 @@ const handleClickMinusButton = (index: number) => {
     position: fixed;
     z-index: 10000;
     bottom: 0;
+    cursor: pointer;
 }
 </style>
